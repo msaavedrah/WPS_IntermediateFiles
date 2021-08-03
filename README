@@ -1,0 +1,37 @@
+wrf_cntrl.parm:
+	Archivo de control. Se define los niveles de presion a considerar.
+	(Revisar manual de UPP-WRF)
+get_upp_parm_from_wrf.ncl
+	Obtiene los parámetros a ingresar en el script "run_unipost_frame".
+	Recibe como input el archivo de WRF.
+run_unipost_frames
+	Hace la conversión de las salidas del modelo WRF a formato grib.
+	Genera un archivo para cada tiempo dentro del archivo de salida de WRF
+	y los enumera en orden creciente.
+num2date_upp.m
+	Genera links de los archivos grib enumerados, pero en funcion a su 
+	fecha y hora. Esto con la finalidad de un mejor reconocimiento y de 
+	lectura por ungrib.exe.
+	Recibe como input las fechas de inicio y final dentro del archivo WRF.
+	Las salidas ya pueden ser llamadas por "ungrib.exe"
+Vtable
+	Archivo que describe las variables de entrada para generar los 
+	"Intermediate Files". Describe las variables de salida de UPP-WRF. 
+	Se ha modificado las variables de humedad y temperatura del suelo, 
+	adecuandose a los niveles generados por LSM NOAH.
+corr_truelat_from_FILE.ncl
+	Una vez creados los IFs, este script hace una copia (con prefijo "FILET", 
+	pero cambia/corrige el parámetro truelat1 a un valor de 7.5
+	(parámetro de proyeción).
+	Nota: Hay que cambiar en el namelist.wps sección"metgrid" las variables 
+	de fg_name, dándole "FILET
+
+ADICIONAL: Solo si se desea que la temperatura del mar cambien en el tiempo
+
+create_IF_SST_c3hrs.ncl
+	Genera archivos IFs usando datos diarios del producto SST OI. Los archivos de 
+	salida tienen prefijo "SST".
+	Genera salidas cada 3 horas (8 x d�a). Los valores se repiten durante un día.
+	NOTA: hay que agregar en fg_name el prefijo de los arhivos IFs de SST.
+
+
